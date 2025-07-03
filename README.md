@@ -21,26 +21,9 @@ This project demonstrates a complete DevOps workflow using a Java Spring Boot ap
 
 ---
 
-## Project Structure
+##  Step-by-Step Setup Instructions
 
-```bash
-springboot-app/
-├── src/main/java
-├── src/main/resources/static
-├── src/main/resources/templates
-├── Dockerfile
-├── Jenkinsfile
-├── pom.xml
-└── springboot-app-manifests/
-    ├── deployment.yml
-    └── service.yml
-```
-
----
-
-## 🛠️ Step-by-Step Setup Instructions
-
-### 1\. Install Jenkins
+### 1. Install Jenkins
 
 ```bash
 sudo apt update
