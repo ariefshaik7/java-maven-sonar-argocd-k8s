@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: springboot-app
-        image: ariefshaik007/ci-cd-proj:replaceImageTag
+        image: ariefshaik007/ci-cd-proj:1
         ports:
         - containerPort: 8080
