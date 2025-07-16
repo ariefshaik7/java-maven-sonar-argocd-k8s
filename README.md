@@ -1,6 +1,6 @@
 # Java Spring Boot CI/CD with Jenkins, SonarQube, Docker, Kubernetes & ArgoCD
 
-![Image](https://github.com/user-attachments/assets/a664a515-6abc-4f11-b675-ee74b62545a0)
+![Image](https://github.com/user-attachments/assets/64ea46b0-9fbe-403e-8549-9c65eb30f242)
 
 This project demonstrates a complete DevOps workflow using a Java Spring Boot application with CI/CD pipeline powered by Jenkins, SonarQube, Docker, Kubernetes, and ArgoCD.
 
