@@ -1,6 +1,6 @@
 pipeline {
-    docker {
   agent {
+    docker {
       image 'ariefshaik007/maven-docker-agent:java17'
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock' 
     }
@@ -14,16 +14,16 @@ pipeline {
     }
     stage('Static Code Analysis') {
       environment {
-        SONAR_URL = "http://10.47.160.78:9000"
+        SONAR_URL = "http://20.150.222.218:9000"
       }
       steps {
         withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
           sh 'cd springboot-app && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
         }
       }
+
     }
     stage('Build and Push Docker Image') {
-  
       environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
         IMAGE_NAME = "ariefshaik007/ci-cd-proj"
@@ -39,27 +39,27 @@ pipeline {
       }
     
     }
+
     stage('Update Deployment File') {
         environment {
             GIT_REPO_NAME = "java-maven-sonar-argocd-k8s"
             GIT_USER_NAME = "ariefshaik7"
-            IMAGE_NAME = "ariefshaik007/ci-cd-shell-lab"
+            IMAGE_NAME = "ariefshaik007/ci-cd-proj"
             IMAGE_TAG = "${BUILD_NUMBER}"
         }
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
-                    rm -rf ${GIT_REPO_NAME}
+                    rm -rf java-maven-sonar-argocd-k8s
                     git clone https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git
                     cd ${GIT_REPO_NAME}
                     git config user.email "ariefshaik001@gmail.com"
                     git config user.name "arief"
-
+                    
                     yq -i ".spec.template.spec.containers[0].image = \\"${IMAGE_NAME}:${IMAGE_TAG}\\"" springboot-app-manifests/deployment.yml
-  
+
                     git add springboot-app-manifests/deployment.yml
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-  
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:master
                 '''
             }
